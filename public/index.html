@@ -324,6 +324,280 @@ a{text-decoration:none;color:inherit}
 @keyframes tickroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ====================================================
+   PREMIUM THEME UPDATE
+==================================================== */
+
+body{
+  background:#050505;
+  color:#fff;
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* RUNNING LIGHTS */
+.running-lights{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
+}
+
+.running-lights span{
+  position:absolute;
+  width:2px;
+  height:180px;
+  background:linear-gradient(to bottom,transparent,#00e5ff,transparent);
+  opacity:.2;
+  animation:runlight linear infinite;
+}
+
+.running-lights span:nth-child(1){
+  left:10%;
+  animation-duration:6s;
+}
+
+.running-lights span:nth-child(2){
+  left:30%;
+  animation-duration:8s;
+}
+
+.running-lights span:nth-child(3){
+  left:50%;
+  animation-duration:5s;
+}
+
+.running-lights span:nth-child(4){
+  left:70%;
+  animation-duration:7s;
+}
+
+.running-lights span:nth-child(5){
+  left:90%;
+  animation-duration:9s;
+}
+
+@keyframes runlight{
+  from{
+    transform:translateY(-200px);
+  }
+  to{
+    transform:translateY(120vh);
+  }
+}
+
+/* THEME COLORS */
+
+#c1{
+  background:#00e5ff;
+}
+
+#c2{
+  border:1px solid rgba(0,229,255,.5);
+}
+
+.nlogo-ring{
+  border:2px solid #00e5ff;
+}
+
+.nlogo-ring span{
+  background:#00e5ff;
+}
+
+.nlinks a::after{
+  background:#00e5ff;
+}
+
+.n-cta{
+  color:#00e5ff;
+  border:1px solid rgba(0,229,255,.5);
+}
+
+.n-cta::before{
+  background:#00e5ff;
+}
+
+.h-eyebrow{
+  color:#00e5ff;
+}
+
+.h-eyebrow::before{
+  background:linear-gradient(90deg,#00e5ff,transparent);
+}
+
+.h-eyebrow::after{
+  background:linear-gradient(90deg,transparent,#00e5ff);
+}
+
+.h-l3{
+  background:linear-gradient(110deg,#00e5ff,#7b2fff,#00e5ff);
+  background-size:200%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.btn-main{
+  background:#00e5ff;
+  color:#050505;
+}
+
+.btn-main:hover{
+  box-shadow:0 0 40px rgba(0,229,255,.45);
+}
+
+.btn-line:hover{
+  border-color:#00e5ff;
+}
+
+.hm-item{
+  border-left:2px solid #00e5ff;
+}
+
+.hm-num{
+  background:linear-gradient(135deg,#00e5ff,#7b2fff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.tag{
+  color:#00e5ff;
+}
+
+.tag::before{
+  background:#00e5ff;
+}
+
+.sec-title .hl{
+  -webkit-text-stroke:1px rgba(0,229,255,.4);
+}
+
+.achip{
+  border:1px solid rgba(0,229,255,.25);
+  color:#00e5ff;
+}
+
+.achip:hover{
+  background:rgba(0,229,255,.08);
+  border-color:#00e5ff;
+}
+
+.astat:hover{
+  background:rgba(0,229,255,.04);
+  border-color:rgba(0,229,255,.25);
+}
+
+.astat-num{
+  background:linear-gradient(135deg,#00e5ff,#7b2fff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.svc-row:hover .svc-name{
+  color:#00e5ff;
+}
+
+.sp{
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.svc-row:hover .sp{
+  border-color:rgba(0,229,255,.3);
+  color:#00e5ff;
+}
+
+.bx:hover{
+  border-color:rgba(0,229,255,.35);
+}
+
+.bx::before{
+  background:radial-gradient(circle at var(--bx,50%) var(--by,50%),rgba(0,229,255,.08),transparent 60%);
+}
+
+.bx-cat{
+  color:#00e5ff;
+}
+
+.bx-link{
+  color:#00e5ff;
+}
+
+.step:hover .step-title{
+  color:#00e5ff;
+}
+
+.stag{
+  background:rgba(0,229,255,.07);
+  border:1px solid rgba(0,229,255,.15);
+  color:#00e5ff;
+}
+
+.tc-dot.on{
+  background:#00e5ff;
+}
+
+.cta-eyebrow{
+  color:#00e5ff;
+}
+
+.cta-form button{
+  background:#00e5ff;
+}
+
+.cta-form button:hover{
+  background:#4df5ff;
+}
+
+.trust-num{
+  background:linear-gradient(135deg,#00e5ff,#7b2fff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.fsoc:hover{
+  border-color:#00e5ff;
+  color:#00e5ff;
+  background:rgba(0,229,255,.06);
+}
+
+.fpill-cta{
+  background:#00e5ff;
+  color:#050505;
+}
+
+.fpill-cta:hover{
+  background:#4df5ff;
+  box-shadow:0 0 30px rgba(0,229,255,.45);
+}
+
+/* FLOATING PROJECT ANIMATION */
+
+.bx{
+  animation:floatbox 6s ease-in-out infinite;
+}
+
+.bx:nth-child(2){
+  animation-delay:1s;
+}
+
+.bx:nth-child(3){
+  animation-delay:2s;
+}
+
+.bx:nth-child(4){
+  animation-delay:3s;
+}
+
+@keyframes floatbox{
+  0%,100%{
+    transform:translateY(0px);
+  }
+  50%{
+    transform:translateY(-10px);
+  }
+}
+
+/* ====================================================
    SECTION COMMONS
 ==================================================== */
 .section{padding:110px 6%;position:relative;z-index:2}
@@ -989,6 +1263,18 @@ footer{
 <!-- background canvas -->
 <canvas id="bg-canvas"></canvas>
 
+<!-- ADD BELOW -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- RUNNING LIGHTS -->
+<div class="running-lights">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
 <!-- floating pill nav -->
 <div id="floatpill">
   <a href="#about" class="fpill-link">About</a>
@@ -1557,6 +1843,10 @@ footer{
   </div>
 </section>
 
+<!-- REPLACE INSTAGRAM ICON -->
+
+<a class="fsoc" href="https://instagram.com/YOURUSERNAME" target="_blank">◉</a>
+
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-grid">
@@ -1723,6 +2013,62 @@ document.querySelectorAll('.bx').forEach(function(bx){
   });
 });
 
+/* ====================================================
+   BACKEND EMAIL STORAGE
+==================================================== */
+
+async function handleCta(){
+
+  var inp=document.getElementById('ctainput');
+  var btn=inp.nextElementSibling;
+
+  if(inp.value && inp.value.includes('@')){
+
+    btn.textContent='Sending...';
+
+    try{
+
+      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          email:inp.value
+        })
+      });
+
+      btn.textContent='✓ Sent!';
+      btn.style.background='#00ff99';
+      btn.style.color='#050505';
+
+      inp.value='';
+
+      setTimeout(function(){
+        btn.textContent='Get Started';
+        btn.style.background='';
+        btn.style.color='';
+      },4000);
+
+    }catch(err){
+
+      btn.textContent='Error';
+
+    }
+
+  }else{
+
+    inp.style.borderBottom='1px solid #ff2d78';
+    inp.placeholder='Please enter a valid email';
+
+    setTimeout(function(){
+      inp.style.borderBottom='';
+      inp.placeholder='your@email.com';
+    },2500);
+
+  }
+}
+
 // ─── COUNTER ANIMATION ───
 function animCount(el,target){
   var start=0,dur=1600;
@@ -1781,7 +2127,7 @@ function handleCta(){
     inp.style.borderBottom='1px solid #ff2d78';
     inp.placeholder='Please enter a valid email';
     setTimeout(function(){inp.style.borderBottom='';inp.placeholder='your@email.com';},2500);
-  }
+  } 
 }
 document.getElementById('ctainput').addEventListener('keydown',function(e){if(e.key==='Enter')handleCta();});
 </script>
