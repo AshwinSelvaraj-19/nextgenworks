@@ -1224,6 +1224,146 @@ footer{
 .fpill-cta:hover{background:#ffb84d;transform:scale(1.05)}
 
 /* ====================================================
+   CONTACT FORM PREMIUM STYLES
+==================================================== */
+.contact-form-wrapper{
+  display:flex;max-width:720px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.contact-form{
+  width:100%;
+  background:rgba(255,255,255,.03);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(0,229,255,.15); 
+  border-radius:16px;
+  padding:48px 40px;
+  transition:all .4s ease;
+}
+.contact-form:focus-within{
+  border-color:rgba(0,229,255,.4);
+  background:rgba(255,255,255,.05);
+  box-shadow:0 0 40px rgba(0,229,255,.1);
+}
+.form-group{
+  margin-bottom:24px;
+}
+.form-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:20px;margin-bottom:24px;
+}
+.form-label{
+  display:block;
+  font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:10px;
+  transition:color .3s ease;
+}
+.form-input,.form-select,.form-textarea{
+  width:100%;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(0,229,255,.1);
+  border-radius:8px;
+  color:#fff;
+  padding:14px 16px;
+  font-size:14px;
+  font-family:inherit;
+  transition:all .3s ease;
+  outline:none;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(0,229,255,.4);
+  box-shadow:0 0 20px rgba(0,229,255,.1);
+}
+.form-input::placeholder,.form-textarea::placeholder{
+  color:rgba(255,255,255,.25);
+}
+.form-select{
+  cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  padding-right:40px;
+}
+.form-select option{
+  background:#050505;
+  color:#fff;
+}
+.form-textarea{
+  resize:none;
+  min-height:120px;
+  font-size:14px;
+  line-height:1.6;
+}
+.form-textarea:focus{
+  min-height:140px;
+}
+.form-error{
+  border-color:#ff2d78 !important;
+}
+.form-submit-btn{
+  width:100%;
+  background:linear-gradient(135deg,#00e5ff,#7b2fff);
+  color:#050505;
+  border:none;
+  border-radius:8px;
+  padding:16px 24px;
+  font-size:12px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:all .3s ease;
+  font-family:inherit;
+}
+.form-submit-btn::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at var(--bs-x,50%) var(--bs-y,50%),
+    rgba(255,255,255,.3),transparent 60%);
+  opacity:0;transition:opacity .3s ease;
+}
+.form-submit-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(0,229,255,.35);
+}
+.form-submit-btn:hover::before{
+  opacity:1;
+}
+.form-submit-btn:active{
+  transform:translateY(0);
+}
+.form-note{
+  font-size:10px;color:rgba(255,255,255,.3);
+  margin-top:16px;letter-spacing:1px;
+  text-align:center;
+  position:relative;z-index:1;
+}
+
+/* ════ RESPONSIVE CONTACT FORM ════ */
+@media(max-width:768px){
+  .contact-form{
+    padding:32px 24px;
+  }
+  .form-row{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .form-input,.form-select,.form-textarea{
+    padding:12px 14px;font-size:13px;
+  }
+  .form-label{
+    font-size:11px;margin-bottom:8px;
+  }
+}
+
+/* ════ VALIDATION STATES ════ */
+.form-group.error .form-input,
+.form-group.error .form-select,
+.form-group.error .form-textarea{
+  border-color:#ff2d78;
+  background:rgba(255,45,120,.05);
+}
+
+/* ====================================================
    RESPONSIVE
 ==================================================== */
 @media(max-width:1024px){
@@ -1689,7 +1829,7 @@ footer{
       <div class="step-dot"><div class="step-dot-inner"><div class="step-dot-core"></div></div></div>
       <div class="step-right">
         <div class="step-num">Step 04</div>
-        <div>
+        <div> 
           <div class="step-title">Launch &amp; Grow</div>
           <div class="step-body">We stay in the cockpit with you after launch. Performance monitoring, analytics, A/B testing, and iterative improvements — until you've hit every target on the roadmap.</div>
           <div class="step-tags"><span class="stag">Deploy</span><span class="stag">Analytics</span><span class="stag">Optimization</span><span class="stag">Support</span></div>
@@ -1807,40 +1947,165 @@ footer{
   </div>
 </section>
 
-<!-- ═══ CTA ═══ -->
+<!-- ═════════ CONTACT / CTA SECTION ═════════ -->
 <section id="cta">
+
   <div class="cta-orb"></div>
   <div class="cta-orb2"></div>
-  <span class="cta-eyebrow appear">Ready to build something remarkable?</span>
-  <h2 class="cta-title appear" style="transition-delay:.1s">
-    Let's make<br>something <em>unforgettable.</em>
+
+  <span class="cta-eyebrow">
+    READY TO BUILD SOMETHING REMARKABLE?
+  </span>
+
+  <h2 class="cta-title">
+    Let's make<br>
+    something <em>unforgettable.</em>
   </h2>
-  <p class="cta-sub appear" style="transition-delay:.2s">
-    Drop your email and we'll book a free 30-minute discovery call. No pitch decks. No pressure. Just an honest conversation.
+
+  <p class="cta-sub">
+    Tell us about your project and our team will contact you shortly.
   </p>
-  <div class="appear" style="transition-delay:.3s">
-    <div class="cta-form">
-      <input type="email" id="ctainput" placeholder="your@email.com">
-      <button onclick="handleCta()">Get Started</button>
-    </div>
-    <p class="cta-note">✦ Free consultation · No spam · Reply within 4 hours</p>
+
+  <div class="contact-form-wrapper">
+
+    <form class="contact-form" id="contactForm">
+
+      <!-- NAME + PHONE -->
+      <div class="form-row">
+
+        <div class="form-group">
+          <label class="form-label">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            class="form-input"
+            id="fullName"
+            placeholder="Enter your full name"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Phone / WhatsApp
+          </label>
+
+          <input
+            type="tel"
+            class="form-input"
+            id="phoneNumber"
+            placeholder="+91 9876543210"
+            required
+          >
+        </div>
+
+      </div>
+
+      <!-- SERVICE -->
+      <div class="form-group">
+
+        <label class="form-label">
+          Service Needed
+        </label>
+
+        <select
+          class="form-select"
+          id="serviceNeeded"
+          required
+        >
+          <option value="">
+            Select Service
+          </option>
+
+          <option value="Website Development">
+            Website Development
+          </option>
+
+          <option value="UI/UX Design">
+            UI/UX Design
+          </option>
+
+          <option value="AI Solutions">
+            AI Solutions
+          </option>
+
+          <option value="Mobile App Development">
+            Mobile App Development
+          </option>
+
+          <option value="Branding">
+            Branding
+          </option>
+
+          <option value="Custom Software">
+            Custom Software
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- MESSAGE -->
+      <div class="form-group">
+
+        <label class="form-label">
+          Project Message
+        </label>
+
+        <textarea
+          class="form-textarea"
+          id="projectMessage"
+          placeholder="Tell us about your project..."
+          required
+        ></textarea>
+
+      </div>
+
+      <!-- BUTTON -->
+      <button
+        type="submit"
+        class="form-submit-btn"
+        id="submitBtn"
+      >
+        Send Message
+      </button>
+
+      <div class="form-note">
+        Free consultation · Fast response · Professional support
+      </div>
+
+    </form>
+
   </div>
-  <div class="cta-trust appear" style="transition-delay:.45s">
+
+  <!-- TRUST ITEMS -->
+  <div class="cta-trust">
+
     <div class="trust-item">
       <div class="trust-num">48hr</div>
-      <div class="trust-lbl">Proposal Turnaround</div>
+      <div class="trust-lbl">
+        Proposal Turnaround
+      </div>
     </div>
-    <div style="width:1px;background:rgba(255,255,255,.06)"></div>
+
     <div class="trust-item">
       <div class="trust-num">100%</div>
-      <div class="trust-lbl">IP Ownership Guaranteed</div>
+      <div class="trust-lbl">
+        Client Satisfaction
+      </div>
     </div>
-    <div style="width:1px;background:rgba(255,255,255,.06)"></div>
+
     <div class="trust-item">
-      <div class="trust-num">NDA</div>
-      <div class="trust-lbl">Signed on First Call</div>
+      <div class="trust-num">24/7</div>
+      <div class="trust-lbl">
+        Support Available
+      </div>
     </div>
+
   </div>
+
 </section>
 
 <!-- REPLACE INSTAGRAM ICON -->
@@ -2017,59 +2282,101 @@ document.querySelectorAll('.bx').forEach(function(bx){
    BACKEND EMAIL STORAGE
 ==================================================== */
 
-async function handleCta(){
-
-  var inp=document.getElementById('ctainput');
-  var btn=inp.nextElementSibling;
-
-  if(inp.value && inp.value.includes('@')){
-
-    btn.textContent='Sending...';
-
-    try{
-
-      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-          email:inp.value
-        })
-      });
-
-      btn.textContent='✓ Sent!';
-      btn.style.background='#00ff99';
-      btn.style.color='#050505';
-
-      inp.value='';
-
-      setTimeout(function(){
-        btn.textContent='Get Started';
-        btn.style.background='';
-        btn.style.color='';
-      },4000);
-
-    }catch(err){
-
-      btn.textContent='Error';
-
+// ─── CONTACT FORM HANDLER ───
+function handleContactForm(event){
+  event.preventDefault();
+  
+  var form=document.getElementById('contactForm');
+  var submitBtn=document.getElementById('submitBtn');
+  var nameInput=document.getElementById('formName');
+  var phoneInput=document.getElementById('formPhone');
+  var serviceInput=document.getElementById('formService');
+  var messageInput=document.getElementById('formMessage');
+  
+  // Validation
+  var isValid=true;
+  
+  [nameInput,phoneInput,serviceInput,messageInput].forEach(function(field){
+    if(!field.value.trim()){
+      field.parentElement.classList.add('error');
+      field.classList.add('form-error');
+      isValid=false;
+    } else {
+      field.parentElement.classList.remove('error');
+      field.classList.remove('form-error');
     }
-
-  }else{
-
-    inp.style.borderBottom='1px solid #ff2d78';
-    inp.placeholder='Please enter a valid email';
-
+  });
+  
+  if(!isValid){
+    submitBtn.textContent='Please fill all fields';
+    submitBtn.style.opacity='.7';
     setTimeout(function(){
-      inp.style.borderBottom='';
-      inp.placeholder='your@email.com';
-    },2500);
-
+      submitBtn.textContent='Send Inquiry';
+      submitBtn.style.opacity='1';
+    },2000);
+    return;
   }
+  
+  // Format message for submission
+  var fullMessage='Name: '+nameInput.value+'\nPhone: '+phoneInput.value+'\nService: '+serviceInput.value+'\n\nMessage:\n'+messageInput.value;
+  
+  // Show sending state
+  submitBtn.textContent='Sending...';
+  submitBtn.disabled=true;
+  
+  // Send via formspree (replace with your form ID)
+  fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      name:nameInput.value,
+      phone:phoneInput.value,
+      service:serviceInput.value,
+      message:messageInput.value,
+      email:nameInput.value+'@inquiry.local'
+    })
+  }).then(function(response){
+    if(response.ok){
+      submitBtn.textContent='✓ Inquiry Sent!';
+      submitBtn.style.background='linear-gradient(135deg, #00ff99, #00b3b3)';
+      form.reset();
+      
+      setTimeout(function(){
+        submitBtn.textContent='Send Inquiry';
+        submitBtn.style.background='';
+        submitBtn.disabled=false;
+      },4000);
+    } else {
+      throw new Error('Form submission failed');
+    }
+  }).catch(function(err){
+    submitBtn.textContent='⚠ Error, try again';
+    submitBtn.disabled=false;
+    setTimeout(function(){
+      submitBtn.textContent='Send Inquiry';
+    },2500);
+  });
 }
 
-// ─── COUNTER ANIMATION ───
+// ─── FORM FIELD FOCUS ANIMATIONS ───
+document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(function(field){
+  field.addEventListener('focus',function(){
+    this.parentElement.classList.remove('error');
+    this.classList.remove('form-error');
+  });
+});
+
+// ─── SUBMIT BUTTON GLOW EFFECT ───
+document.getElementById('submitBtn').addEventListener('mousemove',function(e){
+  var rect=this.getBoundingClientRect();
+  var x=(e.clientX-rect.left)/rect.width*100;
+  var y=(e.clientY-rect.top)/rect.height*100;
+  this.style.setProperty('--bs-x',x+'%');
+  this.style.setProperty('--bs-y',y+'%');
+});
+
+
+// ─── COUNTER ANIMATION ───    
 function animCount(el,target){
   var start=0,dur=1600;
   var t0=null;
@@ -2113,23 +2420,81 @@ if(tCar){
   tCar.addEventListener('mouseleave',function(){tAuto=setInterval(tNext,5000);});
 }
 
-// ─── CTA ───
-function handleCta(){
-  var inp=document.getElementById('ctainput');
-  var btn=inp.nextElementSibling;
-  if(inp.value&&inp.value.includes('@')){
-    btn.textContent='✓ Sent!';
-    btn.style.background='#00ff99';
-    btn.style.color='#080810';
-    inp.value='';
-    setTimeout(function(){btn.textContent='Get Started';btn.style.background='';btn.style.color='';},4000);
-  } else {
-    inp.style.borderBottom='1px solid #ff2d78';
-    inp.placeholder='Please enter a valid email';
-    setTimeout(function(){inp.style.borderBottom='';inp.placeholder='your@email.com';},2500);
-  } 
-}
-document.getElementById('ctainput').addEventListener('keydown',function(e){if(e.key==='Enter')handleCta();});
+</script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+/* ================================
+   SUPABASE CONFIG
+================================ */
+const supabaseUrl = 'https://ankjqevzeghdwiqdtpcq.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFua2pxZXZ6ZWdoZHdpcWR0cGNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3MzQwMTEsImV4cCI6MjA5MzMxMDAxMX0.oQWdNBHwD0fqAa-8Jln42Ox2MoifLwks5CDMLs7ljEE'
+
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+/* ================================
+   CONTACT FORM
+================================ */
+const contactForm = document.getElementById('contactForm')
+
+contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    /* GET VALUES */
+    const fullName = document.getElementById('fullName').value.trim()
+    const phoneNumber = document.getElementById('phoneNumber').value.trim()
+    const serviceNeeded = document.getElementById('serviceNeeded').value
+    const projectMessage = document.getElementById('projectMessage').value.trim()
+
+    /* VALIDATION */
+    if (!fullName || !phoneNumber || !serviceNeeded || !projectMessage) {
+        alert('Please fill all fields')
+        return
+    }
+
+    /* SUBMIT BUTTON */
+    const submitBtn = document.getElementById('submitBtn')
+
+    submitBtn.disabled = true
+    submitBtn.innerText = 'Sending...'
+
+    try {
+
+        /* INSERT DATA */
+        const { error } = await supabase
+            .from('contact_requests')
+            .insert([
+                {
+                    full_name: fullName,
+                    phone_number: phoneNumber,
+                    service_needed: serviceNeeded,
+                    project_message: projectMessage
+                }
+            ])
+
+        if (error) {
+            console.error(error)
+            alert('Failed to send message')
+            submitBtn.disabled = false
+            submitBtn.innerText = 'Send Message'
+            return
+        }
+
+        /* SUCCESS */
+        alert('Message sent successfully')
+
+        contactForm.reset()
+
+    } catch (err) {
+
+        console.error(err)
+        alert('Something went wrong')
+
+    }
+
+    submitBtn.disabled = false
+    submitBtn.innerText = 'Send Message'
+})
 </script>
 </body>
 </html>
