@@ -6,12 +6,19 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ─── Middleware ───────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// Middleware
+// ─────────────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static frontend
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ─── Database Setup ───────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// Database Setup
+// ─────────────────────────────────────────────────────────────
 const db = new Database('nextgenwork.db');
 
 // Create tables
@@ -36,49 +43,78 @@ db.exec(`
   );
 `);
 
-// Seed services if empty
-const serviceCount = db.prepare('SELECT COUNT(*) as count FROM services').get();
+// ─────────────────────────────────────────────────────────────
+// Seed Initial Services
+// ─────────────────────────────────────────────────────────────
+const serviceCount = db.prepare(
+  'SELECT COUNT(*) as count FROM services'
+).get();
+
 if (serviceCount.count === 0) {
-  const insertService = db.prepare(
-    'INSERT INTO services (category, name, price, description) VALUES (?, ?, ?, ?)'
-  );
+  const insertService = db.prepare(`
+    INSERT INTO services (category, name, price, description)
+    VALUES (?, ?, ?, ?)
+  `);
+
   const services = [
-    ['Video Editing', 'Short Reel (under 60 sec)', '₹500', 'Quick promo reel for Instagram/Facebook'],
-    ['Video Editing', 'YouTube Video (5–10 min)', '₹1,500', 'Edited YouTube video with transitions'],
-    ['Video Editing', 'Wedding / Event Video', '₹3,000+', 'Full event highlight reel'],
-    ['Video Editing', 'Short Film Editing', 'Custom', 'Contact for pricing'],
-    ['Web Design', '1 Page Landing Site', '₹3,000', 'Single page promotional website'],
-    ['Web Design', '3–5 Page Business Site', '₹7,000', 'Multi page professional website'],
-    ['Web Design', 'Full Website + Contact Form', '₹10,000+', 'Complete business website'],
-    ['Web Design', 'E-commerce Store', 'Custom', 'Online shop with payment gateway'],
-    ['Social Media', '10 Posts / Month', '₹3,000', 'Design and post 10 posts/month'],
-    ['Social Media', '20 Posts / Month', '₹5,000', 'Design and post 20 posts/month'],
-    ['Social Media', 'Full Page Management', '₹8,000/mo', 'Full Instagram + Facebook management'],
-    ['Social Media', 'Ad Campaign Setup', 'Custom', 'Meta ads setup and management'],
+    ['Video Editing', 'Short Reel (under 60 sec)', '₹500', 'Quick promo reel'],
+    ['Video Editing', 'YouTube Video (5–10 min)', '₹1,500', 'Professional editing'],
+    ['Web Design', 'Landing Page', '₹3,000', 'Single page website'],
+    ['Web Design', 'Business Website', '₹10,000+', 'Multi-page website'],
+    ['Social Media', '10 Posts / Month', '₹3,000', 'Social media management']
   ];
-  services.forEach(s => insertService.run(...s));
-  console.log('✅ Services seeded to database');
+
+  services.forEach(service => {
+    insertService.run(...service);
+  });
+
+  console.log('✅ Services seeded');
 }
 
-// ─── API Routes ───────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// Routes
+// ─────────────────────────────────────────────────────────────
 
-// GET all services
+// Health Check
+app.get('/api/health', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Server running successfully'
+  });
+});
+
+// Get Services
 app.get('/api/services', (req, res) => {
   try {
-    const services = db.prepare('SELECT * FROM services ORDER BY category, id').all();
-    // Group by category
-    const grouped = services.reduce((acc, s) => {
-      if (!acc[s.category]) acc[s.category] = [];
-      acc[s.category].push(s);
+    const services = db.prepare(
+      'SELECT * FROM services ORDER BY category, id'
+    ).all();
+
+    const grouped = services.reduce((acc, service) => {
+      if (!acc[service.category]) {
+        acc[service.category] = [];
+      }
+
+      acc[service.category].push(service);
       return acc;
     }, {});
-    res.json({ success: true, data: grouped });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Server error' });
+
+    res.json({
+      success: true,
+      data: grouped
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch services'
+    });
   }
 });
 
-// POST submit enquiry
+// Submit Enquiry
 app.post('/api/enquiry', (req, res) => {
   try {
     const { name, phone, email, service, message } = req.body;
@@ -87,97 +123,134 @@ app.post('/api/enquiry', (req, res) => {
     if (!name || !phone || !service || !message) {
       return res.status(400).json({
         success: false,
-        message: 'Name, phone, service and message are required.'
+        message: 'Required fields missing'
       });
     }
+
     if (phone.length < 10) {
       return res.status(400).json({
         success: false,
-        message: 'Please enter a valid phone number.'
+        message: 'Invalid phone number'
       });
     }
 
-    const insert = db.prepare(
-      'INSERT INTO enquiries (name, phone, email, service, message) VALUES (?, ?, ?, ?, ?)'
+    const insert = db.prepare(`
+      INSERT INTO enquiries
+      (name, phone, email, service, message)
+      VALUES (?, ?, ?, ?, ?)
+    `);
+
+    const result = insert.run(
+      name,
+      phone,
+      email || '',
+      service,
+      message
     );
-    const result = insert.run(name, phone, email || '', service, message);
 
     res.json({
       success: true,
-      message: 'Thank you! We will contact you within 24 hours.',
+      message: 'Enquiry submitted successfully',
       id: result.lastInsertRowid
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Server error. Please try again.' });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
   }
 });
 
-// GET all enquiries (admin)
+// Admin - Get Enquiries
 app.get('/api/admin/enquiries', (req, res) => {
   try {
-    const { status, service } = req.query;
-    let query = 'SELECT * FROM enquiries';
-    const params = [];
-    const conditions = [];
+    const enquiries = db.prepare(`
+      SELECT * FROM enquiries
+      ORDER BY created_at DESC
+    `).all();
 
-    if (status) { conditions.push('status = ?'); params.push(status); }
-    if (service) { conditions.push('service = ?'); params.push(service); }
-    if (conditions.length) query += ' WHERE ' + conditions.join(' AND ');
-    query += ' ORDER BY created_at DESC';
+    res.json({
+      success: true,
+      data: enquiries
+    });
 
-    const enquiries = db.prepare(query).all(...params);
-    const stats = db.prepare(`
-      SELECT
-        COUNT(*) as total,
-        SUM(CASE WHEN status='new' THEN 1 ELSE 0 END) as new_count,
-        SUM(CASE WHEN status='contacted' THEN 1 ELSE 0 END) as contacted_count,
-        SUM(CASE WHEN status='completed' THEN 1 ELSE 0 END) as completed_count
-      FROM enquiries
-    `).get();
+  } catch (error) {
+    console.error(error);
 
-    res.json({ success: true, data: enquiries, stats });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch enquiries'
+    });
   }
 });
 
-// PATCH update enquiry status
+// Update Enquiry Status
 app.patch('/api/admin/enquiries/:id', (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
-    const validStatuses = ['new', 'contacted', 'completed', 'cancelled'];
 
-    if (!validStatuses.includes(status)) {
-      return res.status(400).json({ success: false, message: 'Invalid status' });
-    }
+    db.prepare(`
+      UPDATE enquiries
+      SET status = ?
+      WHERE id = ?
+    `).run(status, id);
 
-    db.prepare('UPDATE enquiries SET status = ? WHERE id = ?').run(status, id);
-    res.json({ success: true, message: 'Status updated' });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.json({
+      success: true,
+      message: 'Status updated'
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Update failed'
+    });
   }
 });
 
-// DELETE enquiry
+// Delete Enquiry
 app.delete('/api/admin/enquiries/:id', (req, res) => {
   try {
     const { id } = req.params;
-    db.prepare('DELETE FROM enquiries WHERE id = ?').run(id);
-    res.json({ success: true, message: 'Enquiry deleted' });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Server error' });
+
+    db.prepare(`
+      DELETE FROM enquiries
+      WHERE id = ?
+    `).run(id);
+
+    res.json({
+      success: true,
+      message: 'Deleted successfully'
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Delete failed'
+    });
   }
 });
 
-// Serve frontend for all other routes
+// ─────────────────────────────────────────────────────────────
+// Frontend Routing
+// ─────────────────────────────────────────────────────────────
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(
+    path.join(__dirname, 'public', 'index.html')
+  );
 });
 
-// ─── Start Server ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// Start Server
+// ─────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`✅ NextGen Work server running at http://localhost:${PORT}`);
-  console.log(`📊 Admin panel at http://localhost:${PORT}/admin.html`);
+  console.log(`✅ Server running on port ${PORT}`);
 });
